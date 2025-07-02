@@ -8,12 +8,12 @@ export default function ExperienceSection() {
       <div className="text">
         <h2>Nuestra Experiencia Gourmet</h2>
         <p>
-          En L'Atelier, cada bocado es un viaje sensorial. Nuestro chef de autor combina técnicas clásicas con vanguardia culinaria
+          En Ladines Gourmet, cada bocado es un viaje sensorial. Nuestro chef de autor combina técnicas clásicas con vanguardia culinaria
           para ofrecer platos que despiertan todos los sentidos. El ambiente refinado, la música seleccionada y el servicio
           personalizado crean el escenario perfecto para una velada inolvidable.
         </p>
         <p>
-          Ya sea una cena íntima, una celebración especial o un encuentro de negocios, L'Atelier transforma cada comida en un evento
+          Ya sea una cena íntima, una celebración especial o un encuentro de negocios, Ladines Gourmet transforma cada comida en un evento
           excepcional. Descubra la perfección en cada detalle y deleite su paladar con nuestra propuesta gourmet.
         </p>
       </div>

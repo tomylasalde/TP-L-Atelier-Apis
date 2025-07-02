@@ -23,7 +23,7 @@ export default function Footer() {
       <button onClick={scrollToMenu} className="px-6 py-2 bg-yellow-500 text-black rounded-full hover:bg-yellow-400 transition mb-4">
       Menu
       </button>
-      <p>&copy; {new Date().getFullYear()} L'Atelier. Todos los derechos reservados.</p>
+      <p>&copy; {new Date().getFullYear()} Ladines Gourmet. Todos los derechos reservados.</p>
     </footer>
   );
 }

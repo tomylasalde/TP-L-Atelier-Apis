@@ -17,7 +17,7 @@ export default function ShoppingCart() {
       setOpen(false);
     };
   
-    const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
+    const total = cartItems.reduce((sum, item) => sum + (item.precio || 0), 0);
   
     return (
       <div className="fixed top-4 right-4 text-gray-900 z-50">
@@ -43,8 +43,8 @@ export default function ShoppingCart() {
                 {cartItems.map((item, idx) => (
                   <li key={idx} className="border-b pb-2">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-800">{item.name}</span>
-                      <span className="text-sm font-medium text-gray-800">{item.price.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</span>
+                      <span className="text-sm font-medium text-gray-800">{item.nombre}</span>
+                      <span className="text-sm font-medium text-gray-800">{item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</span>
                     </div>
                     <div className="flex space-x-2">
                       <button
@@ -62,8 +62,8 @@ export default function ShoppingCart() {
                     </div>
                     {detailsOpen[idx] && (
                       <div className="mt-1 text-xs text-gray-700 bg-gray-100 rounded p-2">
-                        <p><span className="font-semibold">Ingredientes:</span> {item.ingredients.join(', ')}</p>
-                        <p><span className="font-semibold">Alérgenos:</span> {item.allergens.join(', ')}</p>
+                        <p><span className="font-semibold">Ingredientes:</span> {item.ingredientes?.join(', ')}</p>
+                        <p><span className="font-semibold">Alérgenos:</span> {item.alergenos?.join(', ')}</p>
                       </div>
                     )}
                   </li>
@@ -88,4 +88,4 @@ export default function ShoppingCart() {
         )}
       </div>
     );
-  }
+}

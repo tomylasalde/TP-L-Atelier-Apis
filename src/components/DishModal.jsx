@@ -4,32 +4,28 @@ export default function DishModal({ dish, onClose, onConfirm }) {
   const [localIngredients, setLocalIngredients] = useState([]);
   const [localAllergens, setLocalAllergens] = useState([]);
 
-  // se ejecuta cuando cambia la propiedad dish
-  // Inicializamos los estados locales con los ingredientes y alérgenos del plato
   useEffect(() => {
-    setLocalIngredients(dish.ingredients || []);
-    setLocalAllergens(dish.allergens || []);
+    setLocalIngredients(dish.ingredientes || []);
+    setLocalAllergens(dish.alergenos || []);
   }, [dish]);
 
-  // agregamos o quitamos un ingrediente de la selección
   const toggleIngredient = (ing) => {
     setLocalIngredients((prev) =>
       prev.includes(ing) ? prev.filter(i => i !== ing) : [...prev, ing]
     );
   };
 
-  // modificacion de alergenos
   const toggleAllergen = (alg) => {
     setLocalAllergens((prev) =>
       prev.includes(alg) ? prev.filter(a => a !== alg) : [...prev, alg]
     );
   };
 
-  // Llama a onConfirm pasando el objeto dish actualizado con los arrays locales de ingredientes y alérgenos
   const handleConfirm = () => {
-    onConfirm({ ...dish, ingredients: localIngredients, allergens: localAllergens });
+    onConfirm({ ...dish, ingredientes: localIngredients, alergenos: localAllergens });
     onClose();
   };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
@@ -37,15 +33,15 @@ export default function DishModal({ dish, onClose, onConfirm }) {
           <div className="mb-4">
             <img
               src={dish.image}
-              alt={dish.name}
+              alt={dish.nombre}
               className="w-full h-32 object-cover rounded-lg"
             />
           </div>
         )}
-        <h3 className="text-2xl font-bold mb-4 text-gray-800">{dish.name}</h3>
+        <h3 className="text-2xl font-bold mb-4 text-gray-800">{dish.nombre}</h3>
         <div className="mb-4">
           <p className="font-semibold text-gray-700 mb-2">Ingredientes:</p>
-          {dish.ingredients.map(ing => (
+          {dish.ingredientes?.map(ing => (
             <label key={ing} className="flex items-center mb-1">
               <input
                 type="checkbox"
@@ -59,7 +55,7 @@ export default function DishModal({ dish, onClose, onConfirm }) {
         </div>
         <div className="mb-6">
           <p className="font-semibold text-gray-700 mb-2">Alérgenos:</p>
-          {dish.allergens.map(alg => (
+          {dish.alergenos?.map(alg => (
             <label key={alg} className="flex items-center mb-1">
               <input
                 type="checkbox"

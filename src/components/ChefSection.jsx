@@ -5,7 +5,7 @@ export default function ChefSection() {
       <div className="text">
         <h2>Nuestro Chef</h2>
         <p>
-          El Chef Ejecutivo de L'Atelier ha perfeccionado su arte culinario en los mejores restaurantes de Europa.
+          El Chef Ejecutivo de Ladines Gourmet ha perfeccionado su arte culinario en los mejores restaurantes de Europa.
           Con más de 15 años de experiencia, combina técnicas clásicas con enfoques innovadores para crear
           experiencias gastronómicas memorables.
         </p>
@@ -15,7 +15,7 @@ export default function ChefSection() {
         </p>
       </div>
       <div className="image-container">
-        <img src="https://soloporgusto.com/wp-content/uploads/2020/10/German-Martitegui-03.jpg" alt="Chef L'Atelier" />
+        <img src="https://soloporgusto.com/wp-content/uploads/2020/10/German-Martitegui-03.jpg" alt="Chef Ladines" />
       </div>
     </section>
   );
