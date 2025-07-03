@@ -1,13 +1,23 @@
 import React from 'react';
+
 export default function ItemCard({ item, onAdd }) {
   return (
-    <div className="w-full max-w-sm h-96 bg-gradient-to-br from-gray-900 to-black text-gray-100 rounded-2xl shadow-xl overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-sm h-[500px] bg-gradient-to-br from-gray-900 to-black text-gray-100 rounded-2xl shadow-xl overflow-hidden flex flex-col justify-between">
+
+      {/* ✅ Mostrar imagen si existe */}
+      {item.image && (
+        <img
+          src={item.image}
+          alt={item.nombre}
+          className="w-full h-48 object-cover"
+        />
+      )}
+
       <div className="p-6 flex-1 overflow-y-auto">
-        <div className="inline-block bg-gray-800 text-gold px-3 py-1 rounded-full text-xs mb-2">
-          {item.nombre.charAt(0)}
-        </div>
+       
         <h3 className="text-2xl font-bold mb-2 text-gold">{item.nombre}</h3>
         <p className="text-sm text-gray-300 mb-4">{item.descripcion}</p>
+        
         <div className="flex flex-col mb-2">
           <div className="text-xs font-semibold text-gray-400 mb-1">Ingredientes:</div>
           <div className="flex flex-wrap max-h-16 overflow-y-auto">
@@ -16,6 +26,7 @@ export default function ItemCard({ item, onAdd }) {
             ))}
           </div>
         </div>
+
         <div className="flex flex-col mb-4">
           <div className="text-xs font-semibold text-gray-400 mb-1">Alérgenos:</div>
           <div className="flex flex-wrap max-h-16 overflow-y-auto">
@@ -25,6 +36,7 @@ export default function ItemCard({ item, onAdd }) {
           </div>
         </div>
       </div>
+
       <div className="p-4 bg-black flex items-center justify-between">
         <span className="text-xl font-semibold text-gold">
           {item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}

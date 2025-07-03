@@ -11,6 +11,9 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use('/uploads', express.static('uploads'));
+
+
 // Middleware
 app.use(cors({
   origin: 'http://localhost:3000',

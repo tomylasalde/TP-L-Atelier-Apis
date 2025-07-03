@@ -7,7 +7,9 @@ const platoSchema = new mongoose.Schema({
   alergenos: { type: [String], default: [] },
   precio: { type: Number, required: true },
   categoria: { type: String, required: true }, // Ej: 'Entrante', 'Pasta'
-  isDeleted: { type: Boolean, default: false }
+  isDeleted: { type: Boolean, default: false },
+  image: { type: String } // ✅ nuevo campo para URL de la imagen
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('Plato', platoSchema);

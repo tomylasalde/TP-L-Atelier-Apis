@@ -3,13 +3,27 @@ const Plato = require('../models/Plato');
 // Crear plato
 exports.crearPlato = async (req, res) => {
   try {
-    const plato = new Plato(req.body);
-    await plato.save();
-    res.status(201).json(plato);
+    const { nombre, descripcion, ingredientes, alergenos, precio, categoria } = req.body;
+    const image = req.file ? req.file.filename : null;
+
+    const nuevoPlato = new Plato({
+      nombre,
+      descripcion,
+      ingredientes: ingredientes.split(',').map(i => i.trim()),
+      alergenos: alergenos.split(',').map(a => a.trim()),
+      precio: Number(precio),
+      categoria,
+      image: image ? `http://localhost:4000/uploads/${image}` : null
+    });
+
+    await nuevoPlato.save();
+    res.status(201).json(nuevoPlato);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ message: error.message });
   }
 };
+
 
 // Listar platos (con filtro de isDeleted false)
 exports.listarPlatos = async (req, res) => {

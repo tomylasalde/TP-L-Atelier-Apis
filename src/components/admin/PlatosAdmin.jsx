@@ -10,6 +10,19 @@ export default function PlatosAdmin({ goBack }) {
     precio: '',
     categoria: ''
   });
+  const [imagen, setImagen] = useState(null);
+
+  const categorias = [
+    'entrantes',
+    'ensaladas',
+    'carnes-rojas',
+    'carnes-blancas',
+    'pescados',
+    'pastas',
+    'postres',
+    'bebidas-alcoholicas',
+    'bebidas-sin-alcohol'
+  ];
 
   const fetchPlatos = async () => {
     const res = await fetch('http://localhost:4000/api/platos');
@@ -33,19 +46,26 @@ export default function PlatosAdmin({ goBack }) {
   const handleCreate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
+
+    const formData = new FormData();
+    formData.append('nombre', nuevoPlato.nombre);
+    formData.append('descripcion', nuevoPlato.descripcion);
+    formData.append('ingredientes', nuevoPlato.ingredientes);
+    formData.append('alergenos', nuevoPlato.alergenos);
+    formData.append('precio', nuevoPlato.precio);
+    formData.append('categoria', nuevoPlato.categoria);
+    if (imagen) {
+      formData.append('image', imagen);
+    }
+
     await fetch('http://localhost:4000/api/platos', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({
-        ...nuevoPlato,
-        ingredientes: nuevoPlato.ingredientes.split(',').map(i => i.trim()),
-        alergenos: nuevoPlato.alergenos.split(',').map(a => a.trim()),
-        precio: Number(nuevoPlato.precio)
-      })
+      body: formData
     });
+
     setNuevoPlato({
       nombre: '',
       descripcion: '',
@@ -54,6 +74,7 @@ export default function PlatosAdmin({ goBack }) {
       precio: '',
       categoria: ''
     });
+    setImagen(null);
     fetchPlatos();
   };
 
@@ -103,13 +124,30 @@ export default function PlatosAdmin({ goBack }) {
           required
           className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400"
         />
-        <input
-          placeholder="Categoría"
+
+        {/* ✅ Select de categorías */}
+        <select
           value={nuevoPlato.categoria}
           onChange={e => setNuevoPlato({ ...nuevoPlato, categoria: e.target.value })}
           required
-          className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400"
+          className="w-full p-2 rounded bg-gray-700 text-white"
+        >
+          <option value="">Seleccionar categoría</option>
+          {categorias.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </option>
+          ))}
+        </select>
+
+        {/* ✅ Input de imagen */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={e => setImagen(e.target.files[0])}
+          className="w-full p-2 rounded bg-gray-700 text-white"
         />
+
         <button
           type="submit"
           className="w-full py-2 bg-yellow-400 text-black rounded hover:bg-yellow-300 font-semibold transition"
