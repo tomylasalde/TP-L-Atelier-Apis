@@ -1,3 +1,6 @@
+
+// Ya no se usa, se uso para la primer entrega antes del backend
+
 export const menu = [
   { id: 'entrantes', title: 'Entrantes', items: [
     { id: 1, name: 'Empanadas de carne', description: 'Empanadas de carne con cebolla y especias', ingredients: ['Carne vacuna','Cebolla','Pimentón'], allergens: ['Gluten'], price: 5500, image:'https://hips.hearstapps.com/hmg-prod/images/empanadillas-rellenas-carne-elle-gourmet-2-65bb921087cad.jpg?resize=980:*' },

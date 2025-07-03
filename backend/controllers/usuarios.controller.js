@@ -1,6 +1,5 @@
 const Usuario = require('../models/Usuario');
 
-// Crear usuario
 exports.crearUsuario = async (req, res) => {
   try {
     let { nombre, email, password, rol } = req.body;
@@ -10,13 +9,12 @@ exports.crearUsuario = async (req, res) => {
     await usuario.save();
     res.status(201).json(usuario);
   } catch (error) {
-    console.error(error); // 👈 PARA VER EL ERROR REAL
+    console.error(error); 
     res.status(400).json({ message: error.message });
   }
 };
 
 
-// Listar usuarios
 exports.listarUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find({ isDeleted: false });
@@ -26,7 +24,6 @@ exports.listarUsuarios = async (req, res) => {
   }
 };
 
-// Modificar usuario
 exports.modificarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,7 +34,6 @@ exports.modificarUsuario = async (req, res) => {
   }
 };
 
-// Eliminar usuario (soft delete)
 exports.eliminarUsuario = async (req, res) => {
   try {
     const { id } = req.params;

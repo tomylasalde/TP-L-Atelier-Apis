@@ -6,9 +6,9 @@ const platoSchema = new mongoose.Schema({
   ingredientes: { type: [String], required: true },
   alergenos: { type: [String], default: [] },
   precio: { type: Number, required: true },
-  categoria: { type: String, required: true }, // Ej: 'Entrante', 'Pasta'
+  categoria: { type: String, required: true },
   isDeleted: { type: Boolean, default: false },
-  image: { type: String } // ✅ nuevo campo para URL de la imagen
+  image: { type: String } 
 
 }, { timestamps: true });
 
