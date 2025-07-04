@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import ExperienceSection from './components/ExperienceSection';
@@ -56,7 +56,7 @@ function AppContent() {
     <div className="flex flex-col min-h-screen">
       <header className="hero">
         <div className="hero-content">
-          <h1>L'Atelier</h1>
+          <h1>Ladines Gourmet</h1>
           <p>Descubra nuestra cocina gourmet de autor, una experiencia culinaria que fusiona tradición y vanguardia.</p>
         </div>
       </header>
@@ -79,18 +79,29 @@ function AppContent() {
   );
 }
 
-export default function App() {
-  const [setUser] = React.useState(null);
+function RedirectToLoginForAdmin() {
+  const navigate = useNavigate();
 
- const handleLogin = (userData) => {
-    console.log('logueado!!', userData);
+  useEffect(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    navigate('/login');
+  }, [navigate]);
+
+  return null;
+}
+
+export default function App() {
+  const handleLogin = (userData) => {
+    console.log('logueado!!:', userData);
 
     if (userData.rol === 'admin') {
-      window.location.href = '/admin';
+      window.location.href = '/admin-panel';
     } else {
       window.location.href = '/home';
     }
-};
+  };
 
   return (
     <CartProvider>
@@ -100,7 +111,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<AppContent />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/admin" element={<AdminMenu />} />
+          <Route path="/admin" element={<RedirectToLoginForAdmin />} />
+          <Route path="/admin-panel" element={<AdminMenu />} />
         </Routes>
       </Router>
     </CartProvider>

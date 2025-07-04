@@ -6,6 +6,8 @@ const cors = require('cors');
 const platosRoutes = require('./routes/platos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const authRoutes = require('./routes/auth.routes');
+const pedidosRoutes = require('./routes/pedidos.routes');
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -22,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/platos', platosRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/pedidos', pedidosRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('Servidor Express corriendo y MongoDB conectado correctamente.');
