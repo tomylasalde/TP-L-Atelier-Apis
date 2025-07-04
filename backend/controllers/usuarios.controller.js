@@ -1,4 +1,5 @@
 const Usuario = require('../models/Usuario');
+const bcrypt = require('bcrypt');
 
 exports.crearUsuario = async (req, res) => {
   try {
@@ -9,11 +10,10 @@ exports.crearUsuario = async (req, res) => {
     await usuario.save();
     res.status(201).json(usuario);
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     res.status(400).json({ message: error.message });
   }
 };
-
 
 exports.listarUsuarios = async (req, res) => {
   try {
@@ -27,9 +27,25 @@ exports.listarUsuarios = async (req, res) => {
 exports.modificarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate(id, req.body, { new: true });
-    res.json(usuario);
+    const updateFields = { ...req.body };
+
+    if (updateFields.password && updateFields.password.trim() !== "") {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(updateFields.password, salt);
+      updateFields.password = hashedPassword;
+    } else {
+      delete updateFields.password;
+    }
+
+    const usuarioActualizado = await Usuario.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (!usuarioActualizado) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    res.json(usuarioActualizado);
   } catch (error) {
+    console.error('Error al modificar usuario:', error);
     res.status(400).json({ message: error.message });
   }
 };

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import NavBar from './components/NavBar';
 import ExperienceSection from './components/ExperienceSection';
 import ChefSection from './components/ChefSection';
@@ -9,17 +12,16 @@ import ShoppingCart from './components/ShoppingCart';
 import { CartProvider, useCart } from './context/cartContext';
 import Login from './components/Login';
 import AdminMenu from './components/admin/AdminMenu';
-import LogoutButton from './components/LogoutButton';
 import './index.css';
 
 function AppContent() {
-  const [selected, setSelected] = useState('entrantes');
-  const [menu, setMenu] = useState([]);
-  const [selectedDish, setSelectedDish] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [selected, setSelected] = React.useState('entrantes');
+  const [menu, setMenu] = React.useState([]);
+  const [selectedDish, setSelectedDish] = React.useState(null);
+  const [modalOpen, setModalOpen] = React.useState(false);
   const { addToCart } = useCart();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchPlatos = async () => {
       try {
         const res = await fetch('http://localhost:4000/api/platos');
@@ -54,7 +56,7 @@ function AppContent() {
     <div className="flex flex-col min-h-screen">
       <header className="hero">
         <div className="hero-content">
-          <h1>Ladines Gourmet</h1>
+          <h1>L'Atelier</h1>
           <p>Descubra nuestra cocina gourmet de autor, una experiencia culinaria que fusiona tradición y vanguardia.</p>
         </div>
       </header>
@@ -78,33 +80,29 @@ function AppContent() {
 }
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [setUser] = React.useState(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
+ const handleLogin = (userData) => {
+    console.log('logueado!!', userData);
+
+    if (userData.rol === 'admin') {
+      window.location.href = '/admin';
+    } else {
+      window.location.href = '/home';
     }
-  }, []);
+};
 
-  if (!user) {
-    return <Login onLogin={(userData) => {
-      localStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-    }} />;
-  }
-
-  return user.rol === 'admin' ? (
-    <AdminMenu />
-  ) : (
+  return (
     <CartProvider>
-      <div className="fixed top-4 right-4 flex items-center space-x-12 z-50">
-  <ShoppingCart />
-  <LogoutButton onLogout={() => setUser(null)} />
-</div>
-
-      <AppContent />
+      <Router>
+        <ShoppingCart />
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<AppContent />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/admin" element={<AdminMenu />} />
+        </Routes>
+      </Router>
     </CartProvider>
   );
 }

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import PlatosAdmin from './PlatosAdmin';
 import UsuariosAdmin from './UsuariosAdmin';
+import { useNavigate } from 'react-router-dom';
 
 function AdminMenu() {
   const [view, setView] = useState('menu');
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login'); 
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
@@ -23,11 +31,7 @@ function AdminMenu() {
             Administrar Usuarios
           </button>
           <button
-            onClick={() => {
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
-              window.location.reload();
-            }}
+            onClick={handleLogout}
             className="w-full py-3 bg-red-500 text-white rounded-full hover:bg-red-400 font-semibold transition"
           >
             Cerrar Sesión
