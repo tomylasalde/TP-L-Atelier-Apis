@@ -7,10 +7,13 @@ const platosRoutes = require('./routes/platos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const authRoutes = require('./routes/auth.routes');
 const pedidosRoutes = require('./routes/pedidos.routes');
+const auditoriasRoutes = require('./routes/auditorias.routes');
+const setupSwagger = require('./swagger');
 
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+setupSwagger(app);
 
 
 app.use(cors({
@@ -25,6 +28,7 @@ app.use('/api/platos', platosRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pedidos', pedidosRoutes);
+app.use('/api/auditorias', auditoriasRoutes);
 
 
 app.get('/', (req, res) => {

@@ -1,5 +1,5 @@
 
-// Ya no se usa, se uso para la primer entrega antes del backend
+// Esto es la data que se uso para la primer entrega antes de integrar el backend, la dejo por las dudas
 
 export const menu = [
   { id: 'entrantes', title: 'Entrantes', items: [

@@ -1,6 +1,5 @@
-
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import ExperienceSection from './components/ExperienceSection';
@@ -85,35 +84,44 @@ function RedirectToLoginForAdmin() {
   useEffect(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-
     navigate('/login');
   }, [navigate]);
 
   return null;
 }
 
+function AppRoutes() {
+  const location = useLocation();
+
+  return (
+    <>
+      {location.pathname === '/home' && <ShoppingCart />}
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<AppContent />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/admin" element={<RedirectToLoginForAdmin />} />
+        <Route path="/admin-panel" element={<AdminMenu />} />
+      </Routes>
+    </>
+  );
+}
+
+function handleLogin(userData) {
+  console.log('logueado!!:', userData);
+  if (userData.rol === 'admin') {
+    window.location.href = '/admin-panel';
+  } else {
+    window.location.href = '/home';
+  }
+}
+
 export default function App() {
-  const handleLogin = (userData) => {
-    console.log('logueado!!:', userData);
-
-    if (userData.rol === 'admin') {
-      window.location.href = '/admin-panel';
-    } else {
-      window.location.href = '/home';
-    }
-  };
-
   return (
     <CartProvider>
       <Router>
-        <ShoppingCart />
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<AppContent />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/admin" element={<RedirectToLoginForAdmin />} />
-          <Route path="/admin-panel" element={<AdminMenu />} />
-        </Routes>
+        <AppRoutes />
       </Router>
     </CartProvider>
   );

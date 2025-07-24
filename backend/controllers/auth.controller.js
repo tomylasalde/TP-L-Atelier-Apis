@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
       rol: usuario.rol
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secreto', { expiresIn: '2h' });
+const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' });
 
     res.json({ token, usuario: payload });
   } catch (error) {
